@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Memo Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E9F6F0;--ink:#14213D;--muted:#48587A;--back:#1F4FD8;--face:#FFFFFF;--sun:#FFCF3F;--ok:#B8EBCF;--panel:#FFFFFF;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1A2B;--ink:#F2F6FF;--muted:#A9B6CC;--back:#3B6BFF;--face:#1B2A42;--ok:#1F6B4A;--panel:#16233A}}
+:root[data-theme="dark"]{--bg:#0E1A2B;--ink:#F2F6FF;--muted:#A9B6CC;--back:#3B6BFF;--face:#1B2A42;--ok:#1F6B4A;--panel:#16233A}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Fredoka","Trebuchet MS",system-ui,sans-serif;line-height:1.35}
+main{max-width:480px;margin:0 auto;padding:18px 14px 28px}
+[hidden]{display:none!important}
+h1{font-size:2.8rem;line-height:1;margin:0 0 8px;font-weight:700;letter-spacing:-.5px}
+p{margin:0 0 14px;color:var(--muted)}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.btn{background:var(--sun);color:#14213D;border:0;border-radius:16px;padding:14px 26px;font-weight:700;font-size:1.1rem;box-shadow:0 4px 0 rgba(20,33,61,.35)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(20,33,61,.35)}
+.demo{display:flex;gap:10px;margin:22px 0}
+.demo span{flex:1;aspect-ratio:3/4;background:var(--face);border:3px solid var(--back);border-radius:16px;display:grid;place-items:center;font-size:2.2rem}
+.demo span:nth-child(even){background:var(--back)}
+.steps{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:8px}
+.steps li{background:var(--panel);border-radius:14px;padding:10px 14px;color:var(--ink)}
+.steps b{display:block}
+.steps small{color:var(--muted);font-size:.9rem}
+.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-weight:600}
+.bar .lv{background:var(--sun);color:#14213D;border-radius:999px;padding:3px 12px;font-size:.9rem}
+.stats{color:var(--muted);font-size:.95rem;display:flex;gap:14px}
+.tip{margin:8px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{aspect-ratio:3/4;perspective:700px;background:none;border:0;padding:0;color:inherit}
+.in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .35s}
+.card.on .in{transform:rotateY(180deg)}
+.f,.b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px}
+.b{background:var(--back);color:var(--sun);font-size:2.4rem;font-weight:700;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+.f{background:var(--face);border:3px solid var(--back);transform:rotateY(180deg)}
+.card.ok .f{background:var(--ok);border-color:var(--ok)}
+.big{font-size:2.3rem;line-height:1.1}
+.f b{font-size:.78rem;margin-top:4px}
+.def{font-size:clamp(.68rem,3vw,.84rem);font-weight:600}
+.next{margin-top:18px;text-align:center;background:var(--panel);border-radius:18px;padding:16px}
+.next h2{margin:0 0 4px;font-size:1.4rem}
+.nums{display:flex;justify-content:center;gap:18px;color:var(--muted);margin-top:10px}
+.prize{background:linear-gradient(160deg,#13B981,#0B9584);color:#fff;border-radius:28px;padding:22px 16px;text-align:center;margin:18px 0;box-shadow:0 12px 28px rgba(11,149,132,.3)}
+.prize h2{margin:0;font-size:1.6rem}
+.prize p{color:rgba(255,255,255,.92)}
+.rw{background:rgba(255,255,255,.18);border-radius:18px;padding:12px;margin:10px 0 14px}
+.rw b{display:block;font-size:2.6rem;line-height:1}
+.code{background:#fff;color:#14213D;border-radius:18px;padding:14px}
+.code small{display:block;color:#48587A}
+.code output{display:block;font-size:1.2rem;font-weight:700;letter-spacing:1px;margin:6px 0 10px;user-select:all;word-break:break-all}
+.fine{font-size:.85rem;margin:12px 0 4px}
+.prize .nums{color:rgba(255,255,255,.85)}
+@media(prefers-reduced-motion:reduce){.in{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<section id="s0">
+  <h1>Memo Care</h1>
+  <p>Encuentra las parejas y descubre los servicios que te cuidan el hogar.</p>
+  <div class="demo" aria-hidden="true"><span>⚡</span><span>🔑</span><span>🚰</span><span>🎨</span></div>
+  <ul class="steps">
+    <li><b>Nivel 1: Imágenes</b><small>Encuentra las imágenes iguales.</small></li>
+    <li><b>Nivel 2: Definición e imagen</b><small>Une cada definición con su servicio.</small></li>
+    <li><b>Nivel 3: Profesiones y servicios</b><small>Une la profesión con su definición.</small></li>
+  </ul>
+  <button class="btn" id="go">Empezar a jugar</button>
+</section>
+
+<section id="s1" hidden>
+  <div class="bar"><span class="lv" id="lv"></span><span class="stats"><span id="mv">0 intentos</span><span id="tm">0:00</span></span></div>
+  <p class="tip" id="tip"></p>
+  <div class="grid" id="grid"></div>
+  <div class="next" id="nx" hidden>
+    <h2>¡Nivel completado!</h2>
+    <p id="nxt"></p>
+    <button class="btn" id="nb">Siguiente nivel</button>
+  </div>
+</section>
+
+<section id="s2" hidden>
+  <h1>¡Lo lograste!</h1>
+  <p>Completaste los 3 niveles de Memo Care.</p>
+  <div class="prize">
+    <div id="hs"></div>
+    <h2 id="pt"></h2>
+    <div class="rw"><b id="rb"></b><span id="rs"></span></div>
+    <div class="code"><small>Tu código de canje</small><output id="cd"></output><button class="btn" id="cp">Copiar código</button></div>
+    <p class="fine">Canjéalo en la app HomeCare, en Cuenta/monedero.</p>
+    <div class="nums"><span id="ft">0:00</span><span id="fm">0 intentos</span></div>
+  </div>
+  <button class="btn" id="again">Jugar de nuevo</button>
+</section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const L=[
+ {n:"Nivel 1 de 3",t:"Toca dos cartas y encuentra las imágenes iguales.",
+  p:["⚡","🚰","🪚","🎨","🌱","🔑"].map(e=>[{e},{e}])},
+ {n:"Nivel 2 de 3",t:"Une cada definición con la imagen del servicio.",
+  p:[["⚡","Arregla instalaciones y fallas de luz."],["🚰","Repara fugas, tuberías y llaves de agua."],["🪚","Fabrica y repara muebles de madera."],["🎨","Renueva paredes con color y acabados."],["🌱","Cuida plantas, pasto y jardines."],["🔑","Abre y cambia chapas y cerraduras."]].map(([e,t])=>[{e},{t}])},
+ {n:"Nivel 3 de 3",t:"Une cada profesión con su definición.",
+  p:[["⚡","Electricista","Instala y repara cables, contactos y apagadores."],["🚰","Plomero","Destapa drenajes y arregla fugas."],["❄️","Técnico de clima","Instala y da mantenimiento a aires acondicionados."],["🧹","Personal de limpieza","Deja casas y oficinas limpias y ordenadas."],["🚗","Mecánico","Diagnostica y repara autos."],["📺","Técnico en electrónica","Arregla pantallas, celulares y aparatos."]].map(([e,n,t])=>[{e,n},{t}])}
+];
+let lvl=0,first=null,lock=false,moves=0,done=0,t0=0,timer=null;
+const face=f=>f.n?`<span class="big">${f.e}</span><b>${f.n}</b>`:f.e?`<span class="big">${f.e}</span>`:`<span class="def">${f.t}</span>`;
+const label=f=>f.n?f.n:f.e?"Imagen "+f.e:f.t;
+const fmt=s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+const secs=()=>Math.floor((Date.now()-t0)/1000);
+const show=id=>["s0","s1","s2"].forEach(x=>$("#"+x).hidden=x!==id);
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+function load(i){
+  lvl=i;first=null;lock=false;done=0;
+  $("#lv").textContent=L[i].n;$("#tip").textContent=L[i].t;$("#nx").hidden=true;
+  const cards=[];
+  L[i].p.forEach((pr,k)=>pr.forEach(f=>cards.push({k,f})));
+  shuffle(cards);
+  const g=$("#grid");g.innerHTML="";
+  cards.forEach((c,idx)=>{
+    const b=document.createElement("button");
+    b.className="card";b.dataset.k=c.k;
+    b.setAttribute("aria-label","Carta oculta "+(idx+1));
+    b.innerHTML=`<div class="in"><div class="b" aria-hidden="true">+</div><div class="f">${face(c.f)}</div></div>`;
+    b.onclick=()=>flip(b,c);
+    g.appendChild(b);
+  });
+}
+function flip(b,c){
+  if(lock||b.classList.contains("on"))return;
+  b.classList.add("on");b.setAttribute("aria-label",label(c.f));
+  if(!first){first=b;return}
+  moves++;$("#mv").textContent=moves+(moves===1?" intento":" intentos");
+  const a=first;first=null;
+  if(a.dataset.k===b.dataset.k){
+    a.classList.add("ok");b.classList.add("ok");
+    if(++done===L[lvl].p.length)finish();
+  }else{
+    lock=true;
+    setTimeout(()=>{[a,b].forEach((x,i)=>{x.classList.remove("on");x.setAttribute("aria-label","Carta oculta")});lock=false},950);
+  }
+}
+function finish(){
+  const last=lvl===L.length-1;
+  $("#nxt").textContent=last?"¡Ya casi! Mira tu recompensa.":"Sigue con el "+L[lvl+1].n.toLowerCase()+".";
+  $("#nb").textContent=last?"Ver mi recompensa":"Siguiente nivel";
+  $("#nx").hidden=false;$("#nx").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+$("#nb").onclick=()=>{
+  if(lvl<L.length-1){load(lvl+1);window.scrollTo(0,0)}
+  else{clearInterval(timer);reward(secs());show("s2");window.scrollTo(0,0)}
+};
+function start(){
+  moves=0;$("#mv").textContent="0 intentos";t0=Date.now();$("#tm").textContent="0:00";
+  clearInterval(timer);timer=setInterval(()=>$("#tm").textContent=fmt(secs()),1000);
+  load(0);show("s1");
+}
+const T={
+ oro:{n:"Casita de Oro",r1:"#FFD75E",r2:"#E39A00",w:"#FFF4CC",s:"#FFB800",st:3,b:"15%",d:"de descuento en tu próximo servicio"},
+ plata:{n:"Casita de Plata",r1:"#DDE3EC",r2:"#8592A3",w:"#F1F4F9",s:"#98A4B5",st:2,b:"10%",d:"extra en Care Coins en tu próximo servicio"},
+ bronce:{n:"Casita de Bronce",r1:"#E3A470",r2:"#A85F2B",w:"#F8E6D6",s:"#C77B3F",st:1,b:"5%",d:"extra en Care Coins en tu próximo servicio"}
+};
+function house(k){const c=T[k],g="g"+k;
+ return `<svg viewBox="0 0 200 205" width="190" height="195" role="img" aria-label="${c.n}"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c.r1}"/><stop offset="1" stop-color="${c.r2}"/></linearGradient></defs>`
+ +(k==="oro"?`<circle cx="100" cy="110" r="92" fill="${c.r1}" opacity=".3"/><circle cx="100" cy="110" r="72" fill="${c.r1}" opacity=".35"/><text x="26" y="70" font-size="26" fill="#FFE27A">✦</text><text x="150" y="60" font-size="20" fill="#FFE27A">✦</text>`:"")
+ +`<rect x="45" y="95" width="110" height="80" rx="8" fill="${c.w}" stroke="${c.r2}" stroke-width="4"/>`
+ +`<path d="M30 100 L100 44 L170 100 Z" fill="url(#${g})" stroke="${c.r2}" stroke-width="4" stroke-linejoin="round"/>`
+ +`<rect x="86" y="126" width="28" height="49" rx="6" fill="#0FA57C"/><circle cx="108" cy="152" r="2.5" fill="#fff"/>`
+ +`<rect x="56" y="112" width="22" height="22" rx="4" fill="#BFE9DC" stroke="${c.r2}" stroke-width="3"/><rect x="122" y="112" width="22" height="22" rx="4" fill="#BFE9DC" stroke="${c.r2}" stroke-width="3"/>`
+ +`<circle cx="100" cy="86" r="14" fill="#14213D"/><text x="100" y="92" font-size="17" text-anchor="middle">🔧</text>`
+ +(k==="oro"?`<path d="M78 42 L84 22 L92 34 L100 14 L108 34 L116 22 L122 42 Z" fill="#FFB800" stroke="#B77800" stroke-width="3" stroke-linejoin="round"/>`:"")
+ +`<text x="100" y="199" font-size="20" text-anchor="middle" fill="${c.s}" letter-spacing="3">${"★".repeat(c.st)}</text></svg>`;}
+function luhn(d){let s=0;for(let i=d.length-1,k=0;i>=0;i--,k++){let n=+d[i];if(k%2===0){n*=2;if(n>9)n-=9}s+=n}return(10-s%10)%10}
+function mkcode(k){let p={oro:1,plata:2,bronce:3}[k]+"26";const a=new Uint8Array(14);crypto.getRandomValues(a);p+=[...a].map(x=>x%10).join("");return p+luhn(p)}
+let raw="";
+function reward(s){
+ const k=s<=120?"oro":s<=210?"plata":"bronce",c=T[k];
+ $("#hs").innerHTML=house(k);$("#pt").textContent=c.n;$("#rb").textContent=c.b;$("#rs").textContent=c.d;
+ raw=mkcode(k);$("#cd").textContent=raw.replace(/(\d{4})(?=\d)/g,"$1 ");
+ $("#cp").textContent="Copiar código";
+ $("#ft").textContent="Tiempo "+fmt(s);$("#fm").textContent=moves+" intentos";
+}
+$("#cp").onclick=async()=>{const b=$("#cp");try{await navigator.clipboard.writeText(raw);b.textContent="¡Copiado!"}catch(e){const r=document.createRange();r.selectNodeContents($("#cd"));const x=getSelection();x.removeAllRanges();x.addRange(r);b.textContent="Mantén presionado para copiar"}};
+$("#go").onclick=start;$("#again").onclick=start;
+</script>
+</body>
+</html>
